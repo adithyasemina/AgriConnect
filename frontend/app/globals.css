@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --text: #1a2e1a;
+  --background: #ffffff; 
+  --primary: #22c55e;
+  --secondary: #ffffff;
+  --accent: #166534;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff; 
+    --text: #1a2e1a;
+  }
+}
+
+/* 1. මුළු පිටුවෙම (Global) Scrollbar එක අයින් කිරීමට */
+@layer base {
+  html, body {
+    background-color: #ffffff;
+    color: var(--text);
+    font-family: var(--font-sans);
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+    /* Firefox සහ IE සඳහා */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  /* Chrome, Safari සඳහා */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
+}
