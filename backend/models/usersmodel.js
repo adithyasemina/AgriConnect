@@ -19,6 +19,10 @@ const userSchema = mongoose.Schema({
         required: true,
         default: false,
     },
+    isBlocked: { 
+        type: Boolean, 
+        default: false 
+    }
 });
 
 const User = mongoose.model("User", userSchema);

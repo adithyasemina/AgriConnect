@@ -42,7 +42,7 @@ export default function LoginPage() {
         icon: <UserCheck size={20} className="text-green-600" />
       });
 
-      router.push(isAdmin ? "/" : "/");
+      router.push(isAdmin ? "/admin" : "/");
     } catch (err: unknown) {
       const error = err as AxiosError<{ message?: string }>;
       const message = error.response?.data?.message || "Invalid email or password.";

@@ -40,9 +40,6 @@ export const registerUser = async (req, res) => {
     }
 };
 
-
-
-
 // 2. ලොගින් වීම (Login User)
 export const loginUser = async (req, res) => {
     try {
@@ -69,6 +66,41 @@ export const loginUser = async (req, res) => {
         } else {
             res.status(401).json({ message: "Invalid email or password" });
             console.log("Invalid email or password");
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// සියලුම පරිශීලකයන් ලබා ගැනීම (Admin Only)
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).select("-password");
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// පරිශීලකයෙකු Block/Unblock කිරීම
+export const toggleBlockUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (user) {
+            if (user.isAdmin) {
+                return res.status(400).json({ message: "ඇඩ්මින් පරිශීලකයෙකු බ්ලොක් කළ නොහැක!" });
+            }
+
+            user.isBlocked = !user.isBlocked; // දැනට තියෙන තත්ත්වය මාරු කරයි (Toggle)
+            const updatedUser = await user.save();
+            
+            res.status(200).json({ 
+                message: updatedUser.isBlocked ? "පරිශීලකයා බ්ලොක් කරන ලදී." : "පරිශීලකයා අන්බ්ලොක් කරන ලදී.",
+                isBlocked: updatedUser.isBlocked 
+            });
+        } else {
+            res.status(404).json({ message: "පරිශීලකයා හමු නොවීය." });
         }
     } catch (error) {
         res.status(500).json({ message: error.message });
