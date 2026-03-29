@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 
-
 // 1. Register User
 export const registerUser = async (req, res) => {
     try {
@@ -40,7 +39,7 @@ export const registerUser = async (req, res) => {
     }
 };
 
-// 2. ලොගින් වීම (Login User)
+// 2. Login User
 export const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -82,7 +81,7 @@ export const getAllUsers = async (req, res) => {
     }
 };
 
-// පරිශීලකයෙකු Block/Unblock කිරීම
+// පරිශීලකයෙකු Block/Unblock කිරීම (Admin Only)
 export const toggleBlockUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
